@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Profile Settings — Conversational AI</title>
+<style>
+  :root{
+    --bg:#3b1534;
+    --panel:#5a2450;
+    --muted:#d9c9dc;
+    --accent:#ff2fa6;
+    --white:#ffffff;
+    --card:#6f3b64;
+  }
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:var(--white)}
+  .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:28px;box-sizing:border-box}
+  .panel{width:100%;max-width:980px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));border-radius:10px;padding:24px;box-shadow:0 20px 50px rgba(0,0,0,0.45)}
+  h1{margin:0 0 12px;font-size:20px}
+  .grid{display:grid;grid-template-columns:1fr 320px;gap:18px}
+  fieldset{border:0;padding:0;margin:0}
+  .section{background:rgba(255,255,255,0.02);padding:14px;border-radius:8px;margin-bottom:12px}
+  label{display:block;font-size:13px;margin-bottom:6px;color:rgba(255,255,255,0.95)}
+  input[type="text"],input[type="email"],input[type="number"],select,textarea,input[type="time"]{
+    width:100%;padding:10px 12px;border-radius:8px;border:0;background:rgba(255,255,255,0.95);color:#111;box-sizing:border-box;font-size:14px;outline:none
+  }
+  .row{display:flex;gap:8px}
+  .col{display:flex;flex-direction:column;gap:8px}
+  .small{font-size:13px;color:var(--muted)}
+  .actions{display:flex;gap:10px;justify-content:flex-end;margin-top:10px}
+  .btn{background:linear-gradient(90deg,var(--accent),#ff5aa8);color:#fff;border:0;padding:10px 14px;border-radius:999px;cursor:pointer}
+  .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:8px 12px;border-radius:8px;cursor:pointer}
+  .avatar-wrap{display:flex;flex-direction:column;align-items:center;gap:12px;padding:12px}
+  .avatar{width:120px;height:120px;border-radius:999px;border:3px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.04);display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block}
+  .trusted-list{margin-top:8px;display:flex;flex-direction:column;gap:8px}
+  .trusted-item{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px;background:rgba(255,255,255,0.03)}
+  .toggle{display:inline-flex;align-items:center;gap:8px}
+  .chip{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(0,0,0,0.15);font-size:13px;color:var(--muted)}
+  .range{width:100%}
+  @media (max-width:880px){ .grid{grid-template-columns:1fr} .avatar{width:96px;height:96px} }
+</style>
+</head>
+<body>
+  <main class="wrap" role="main" aria-labelledby="settingsTitle">
+    <section class="panel" aria-labelledby="settingsTitle">
+      <h1 id="settingsTitle">Profile Settings</h1>
+      <p class="small">Update basic info, preferences, privacy & emergency contacts. Settings are saved locally in this demo.</p>
+
+      <form id="settingsForm" class="grid" novalidate>
+        <div>
+          <fieldset class="section" aria-labelledby="basicInfoLegend">
+            <legend id="basicInfoLegend" class="small" style="font-weight:700;margin-bottom:8px">1. Basic Info</legend>
+            <label for="fullName">Name</label>
+            <input id="fullName" name="fullName" type="text" placeholder="Your full name" autocomplete="name" />
+
+            <div class="row" style="margin-top:8px">
+              <div style="flex:1">
+                <label for="age">Age</label>
+                <input id="age" name="age" type="number" min="0" placeholder="e.g., 29" />
+              </div>
+              <div style="flex:1">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender">
+                  <option value="">Prefer not to say</option>
+                  <option>Female</option>
+                  <option>Male</option>
+                  <option>Non-binary</option>
+                  <option>Other</option>
+                </select>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="section" aria-labelledby="prefsLegend" style="margin-top:12px">
+            <legend id="prefsLegend" class="small" style="font-weight:700;margin-bottom:8px">2. Preferences</legend>
+
+            <label for="language">Preferred language / style</label>
+            <select id="language" name="language">
+              <option value="en">English (Standard)</option>
+              <option value="en-kenya">Kenyan English</option>
+              <option value="sw">Swahili</option>
+              <option value="mix">English + Swahili</option>
+            </select>
+
+            <label for="affirmTime" style="margin-top:8px">Daily affirmation time</label>
+            <input id="affirmTime" name="affirmTime" type="time" />
+
+            <label style="margin-top:8px">Topics of interest</label>
+            <div class="row">
+              <label class="chip"><input type="checkbox" name="topics" value="stress" /> Stress</label>
+              <label class="chip"><input type="checkbox" name="topics" value="relationships" /> Relationships</label>
+              <label class="chip"><input type="checkbox" name="topics" value="sleep" /> Sleep</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="section" aria-labelledby="statusLegend" style="margin-top:12px">
+            <legend id="statusLegend" class="small" style="font-weight:700;margin-bottom:8px">3. Mental Health Status (optional)</legend>
+
+            <label>Active mood tracking</label>
+            <div class="row" style="align-items:center">
+              <label class="chip"><input type="radio" name="moodFreq" value="daily" /> Daily</label>
+              <label class="chip"><input type="radio" name="moodFreq" value="weekly" /> Weekly</label>
+              <label class="chip"><input type="radio" name="moodFreq" value="" /> Off</label>
+            </div>
+
+            <label for="stress" style="margin-top:10px">Self-reported stress (1–10)</label>
+            <input id="stress" name="stress" type="range" min="1" max="10" value="5" class="range" />
+            <div class="small" id="stressVal">5</div>
+
+            <label style="margin-top:8px">Favorite coping methods</label>
+            <div class="row">
+              <label class="chip"><input type="checkbox" name="coping" value="journaling" /> Journaling</label>
+              <label class="chip"><input type="checkbox" name="coping" value="meditation" /> Meditation</label>
+              <label class="chip"><input type="checkbox" name="coping" value="walks" /> Walks</label>
+            </div>
+          </fieldset>
+
+          <fieldset class="section" aria-labelledby="activityLegend" style="margin-top:12px">
+            <legend id="activityLegend" class="small" style="font-weight:700;margin-bottom:8px">4. Activity & Journal</legend>
+            <label class="small">Journal privacy</label>
+            <div class="row" style="align-items:center">
+              <label class="chip"><input type="radio" name="journalPrivacy" value="private" /> Private</label>
+              <label class="chip"><input type="radio" name="journalPrivacy" value="anonymized" /> Anonymized</label>
+            </div>
+            <div class="small" style="margin-top:8px">Chat history: <label class="chip"><input type="checkbox" id="saveHistory" /> Save conversations</label></div>
+          </fieldset>
+
+          <fieldset class="section" aria-labelledby="securityLegend" style="margin-top:12px">
+            <legend id="securityLegend" class="small" style="font-weight:700;margin-bottom:8px">5. Security & Settings</legend>
+            <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+              <div>
+                <label class="small">Enable biometric login</label>
+                <div class="small">(Placeholder — requires platform support)</div>
+              </div>
+              <label class="toggle"><input type="checkbox" id="biometric" /> <span class="small">On</span></label>
+            </div>
+
+            <div style="margin-top:10px">
+              <label for="anonData" class="small">Share anonymized usage data</label>
+              <div><label class="chip"><input type="checkbox" id="anonData" /> Allow</label></div>
+            </div>
+          </fieldset>
+
+          <fieldset class="section" aria-labelledby="emergLegend" style="margin-top:12px">
+            <legend id="emergLegend" class="small" style="font-weight:700;margin-bottom:8px">6. Emergency / Escalation Info</legend>
+            <label for="trustedName">Add trusted contact</label>
+            <div class="row">
+              <input id="trustedName" placeholder="Name" type="text" />
+              <input id="trustedPhone" placeholder="+123456789" type="text" />
+            </div>
+            <div style="display:flex;gap:8px;margin-top:8px">
+              <button type="button" id="addTrusted" class="btn-ghost">Add</button>
+              <div class="small" style="align-self:center;color:var(--muted)">Trusted contacts used for escalation</div>
+            </div>
+          </fieldset>
+
+          <div class="actions" style="margin-top:14px">
+            <button type="button" id="resetBtn" class="btn-ghost">Reset</button>
+            <button type="submit" class="btn">Save settings</button>
+          </div>
+        </div>
+
+        <aside>
+          <div class="section avatar-wrap" aria-label="Profile picture">
+            <div class="avatar" id="avatarPreview" aria-hidden="true">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="#fff" opacity="0.95"/><path d="M4 20a8 8 0 0 1 16 0" stroke="#fff" stroke-opacity="0.9" stroke-width="1.2" stroke-linecap="round"/></svg>
+            </div>
+            <label class="small">Profile photo</label>
+            <input id="avatarInput" type="file" accept="image/*" />
+            <div class="small">Recommended: square image. Not uploaded in this demo — stored locally.</div>
+          </div>
+
+          <div class="section">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div class="small" style="font-weight:700">Trusted contacts</div>
+              <div class="small" id="trustedCount">0</div>
+            </div>
+
+            <div id="trustedList" class="trusted-list" aria-live="polite"></div>
+          </div>
+        </aside>
+      </form>
+    </section>
+  </main>
+
+<script>
+  const KEY = 'convai_profile_v1';
+  const form = document.getElementById('settingsForm');
+  const stress = document.getElementById('stress');
+  const stressVal = document.getElementById('stressVal');
+  const avatarInput = document.getElementById('avatarInput');
+  const avatarPreview = document.getElementById('avatarPreview');
+  const addTrusted = document.getElementById('addTrusted');
+  const trustedName = document.getElementById('trustedName');
+  const trustedPhone = document.getElementById('trustedPhone');
+  const trustedListEl = document.getElementById('trustedList');
+  const trustedCount = document.getElementById('trustedCount');
+
+  function load() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      Object.entries(data).forEach(([k,v]) => {
+        const el = document.getElementById(k);
+        if (!el) return;
+        if (el.type === 'checkbox') el.checked = !!v;
+        else if (el.type === 'radio' || el.tagName === 'SELECT') {
+          if (el.type === 'radio') {
+            const r = document.querySelector(`[name="${el.name}"][value="${v}"]`);
+            if (r) r.checked = true;
+          } else el.value = v;
+        } else el.value = v;
+      });
+      // custom fields
+      if (data.trusted && Array.isArray(data.trusted)) {
+        renderTrusted(data.trusted);
+      }
+      if (data.avatar) setAvatar(data.avatar);
+      if (data.stress) { stress.value = data.stress; stressVal.textContent = data.stress; }
+    } catch(e){ console.warn(e) }
+  }
+
+  function save(data) {
+    localStorage.setItem(KEY, JSON.stringify(data));
+  }
+
+  function snapshot() {
+    const topics = Array.from(document.querySelectorAll('input[name="topics"]:checked')).map(i=>i.value);
+    const coping = Array.from(document.querySelectorAll('input[name="coping"]:checked')).map(i=>i.value);
+    const moodFreq = (document.querySelector('input[name="moodFreq"]:checked') || {}).value || '';
+    const journalPrivacy = (document.querySelector('input[name="journalPrivacy"]:checked') || {}).value || '';
+    const data = {
+      fullName: document.getElementById('fullName').value || '',
+      age: document.getElementById('age').value || '',
+      gender: document.getElementById('gender').value || '',
+      language: document.getElementById('language').value || '',
+      affirmTime: document.getElementById('affirmTime').value || '',
+      topics,
+      moodFreq,
+      stress: stress.value,
+      coping,
+      journalPrivacy,
+      saveHistory: document.getElementById('saveHistory').checked,
+      biometric: document.getElementById('biometric').checked,
+      anonData: document.getElementById('anonData').checked,
+      trusted: loadTrusted(),
+      avatar: localStorage.getItem(KEY + '_avatar') || null
+    };
+    return data;
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const data = snapshot();
+    save(data);
+    alert('Settings saved (local demo).');
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    if (!confirm('Reset settings to defaults?')) return;
+    localStorage.removeItem(KEY);
+    localStorage.removeItem(KEY + '_avatar');
+    location.reload();
+  });
+
+  stress.addEventListener('input', () => stressVal.textContent = stress.value);
+
+  // avatar handling (store as dataURL)
+  avatarInput.addEventListener('change', (e) => {
+    const f = e.target.files && e.target.files[0];
+    if (!f) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const dataUrl = reader.result;
+      localStorage.setItem(KEY + '_avatar', dataUrl);
+      setAvatar(dataUrl);
+    };
+    reader.readAsDataURL(f);
+  });
+
+  function setAvatar(dataUrl) {
+    avatarPreview.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = dataUrl;
+    img.alt = 'Profile photo';
+    avatarPreview.appendChild(img);
+  }
+
+  // Trusted contacts management
+  function loadTrusted() {
+    try {
+      const raw = localStorage.getItem(KEY + '_trusted');
+      return raw ? JSON.parse(raw) : [];
+    } catch { return []; }
+  }
+
+  function saveTrusted(list) {
+    localStorage.setItem(KEY + '_trusted', JSON.stringify(list));
+  }
+
+  function renderTrusted(list) {
+    trustedListEl.innerHTML = '';
+    list.forEach((t, i) => {
+      const el = document.createElement('div');
+      el.className = 'trusted-item';
+      el.innerHTML = `<div><strong>${escapeHtml(t.name)}</strong><div class="small">${escapeHtml(t.phone)}</div></div>
+                      <div style="display:flex;gap:8px"><a class="small" href="tel:${t.phone}" style="color:var(--accent);text-decoration:none">Call</a>
+                      <button class="btn-ghost" data-i="${i}">Remove</button></div>`;
+      trustedListEl.appendChild(el);
+    });
+    trustedCount.textContent = String(list.length);
+    // attach remove handlers
+    trustedListEl.querySelectorAll('.btn-ghost').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = Number(e.currentTarget.dataset.i);
+        const arr = loadTrusted();
+        arr.splice(idx,1);
+        saveTrusted(arr);
+        renderTrusted(arr);
+      });
+    });
+  }
+
+  addTrusted.addEventListener('click', () => {
+    const name = trustedName.value.trim();
+    const phone = trustedPhone.value.trim();
+    if (!name || !phone) return alert('Enter both name and phone number.');
+    const list = loadTrusted();
+    list.push({ name, phone });
+    saveTrusted(list);
+    trustedName.value = '';
+    trustedPhone.value = '';
+    renderTrusted(list);
+  });
+
+  function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  // initialize
+  (function init() {
+    // populate radios / selects with defaults if empty
+    if (!localStorage.getItem(KEY)) {
+      const defaults = { language:'en', affirmTime:'08:00', stress:5, moodFreq:'', journalPrivacy:'private', trusted:[] };
+      localStorage.setItem(KEY, JSON.stringify(defaults));
+    }
+    // ensure trusted list stored as separate key if absent
+    if (!localStorage.getItem(KEY + '_trusted')) localStorage.setItem(KEY + '_trusted', JSON.stringify([]));
+    load();
+    renderTrusted(loadTrusted());
+  })();
+</script>
+</body>
+</html>

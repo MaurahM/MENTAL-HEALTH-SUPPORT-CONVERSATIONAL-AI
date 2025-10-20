@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Conversational AI — Mental Health Support</title>
+  <style>
+    :root{
+      --bg:#3b1534;
+      --panel:#5a2450;
+      --accent:#ff2fa6;
+      --muted:#d9c9dc;
+      --white:#ffffff;
+      --pill:#ffffff;
+    }
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:var(--white)}
+    .site{min-height:100%;display:flex;flex-direction:column}
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 36px;border-bottom:6px solid rgba(0,0,0,0.08)}
+    .brand{font-weight:700;letter-spacing:1px}
+    .cta{background:linear-gradient(90deg,var(--accent),#ff5aa8);color:#fff;border:0;padding:8px 14px;border-radius:20px;text-decoration:none;font-weight:600}
+    main{flex:1;display:flex;align-items:center;justify-content:center;padding:48px;box-sizing:border-box}
+    .panel{width:100%;max-width:1100px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));border-radius:8px;padding:48px;box-shadow:0 20px 50px rgba(0,0,0,0.5);display:flex;gap:36px;align-items:center;box-sizing:border-box}
+    .left{flex:1;min-width:0}
+    .right{flex:1;display:flex;align-items:center;justify-content:center}
+    .hero-title{font-size:28px;font-weight:800;letter-spacing:1px;margin:0 0 18px;text-transform:uppercase;text-align:left}
+    .hero-copy{color:var(--muted);line-height:1.5;max-width:520px;margin-bottom:22px}
+    .hero-actions{display:flex;gap:12px;align-items:center}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),#ff5aa8);color:#fff;border:0;padding:10px 20px;border-radius:999px;font-weight:700;cursor:pointer;box-shadow:0 10px 24px rgba(255,47,166,0.14)}
+    .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.12);color:var(--white);padding:10px 18px;border-radius:999px;cursor:pointer}
+    .illustration{width:320px;height:320px;border-radius:8px;display:flex;align-items:center;justify-content:center;border:3px solid rgba(255,255,255,0.06)}
+    .kicker{display:inline-block;margin-bottom:8px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.06);font-weight:700;color:var(--white);font-size:12px}
+    footer{padding:18px 36px;text-align:center;color:var(--muted);font-size:13px;border-top:1px solid rgba(255,255,255,0.02)}
+    @media (max-width:920px){
+      .panel{flex-direction:column;padding:28px}
+      .illustration{width:220px;height:220px}
+      .hero-title{font-size:22px;text-align:center}
+      .hero-copy{text-align:center}
+      header{padding:12px 18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="site">
+    <header>
+      <div class="brand">CONVERSATIONAL AI</div>
+      <nav>
+        <a class="cta" href="Signup.html">Join Us</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="panel" role="region" aria-labelledby="heroTitle">
+        <div class="left">
+          <div class="kicker">MENTAL HEALTH SUPPORT</div>
+          <h1 id="heroTitle" class="hero-title">MENTAL HEALTH SUPPORT CONVERSATIONAL AI</h1>
+          <p class="hero-copy">Connect with an empathetic assistant designed to support mental wellbeing. Private, easy to use, and available whenever you need it. Use the app to chat, journal, meditate, or get urgent help.</p>
+
+          <div class="hero-actions">
+            <a class="btn-primary" href="Signup.html" role="button">Get started</a>
+            <a class="btn-outline" href="Login.html" role="button">Log in</a>
+          </div>
+        </div>
+
+        <div class="right" aria-hidden="true">
+          <div class="illustration" aria-hidden="true">
+            <!-- simple brain SVG to match style -->
+            <svg width="180" height="180" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" fill="none" aria-hidden="true">
+              <rect x="0" y="0" width="64" height="64" rx="8" fill="rgba(255,255,255,0.02)"/>
+              <path d="M20 36c-3-6 0-12 6-15 3-1 7-2 11-2s10 1 13 4c3 3 6 7 6 11s-2 9-6 12-9 4-13 4-10-1-13-4c-4-3-6-7-4-9z" stroke="#fff" stroke-width="1.2" fill="rgba(255,255,255,0.95)"/>
+            </svg>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      © <span id="year"></span> Conversational AI — Private & confidential. Need help? <a href="Escalation.html" style="color:var(--accent);text-decoration:none;font-weight:600">Emergency services</a>
+    </footer>
+  </div>
+
+  <script>
+    // small helpers
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
