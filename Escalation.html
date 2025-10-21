@@ -122,9 +122,9 @@
 
 <script>
   const contacts = [
-    { who: 'National Mental Health Helpline', phone: '+18001234567', notes: '24/7 confidential support' },
+    { who: 'National Mental Health Helpline', phone: '1190', notes: '24/7 confidential support' },
     { who: 'Ambulance / Emergency', phone: '911', notes: 'Local emergency services' },
-    { who: 'Suicide Prevention Line', phone: '+18009876543', notes: 'If you are considering self-harm' }
+    { who: 'Suicide Prevention Line', phone: '0800 723 253', notes: 'If you are considering self-harm' }
   ];
 
   const backdrop = document.getElementById('backdrop');
@@ -164,7 +164,7 @@
     switch(action){
       case 'helpline':
         // change number to local helpline as needed
-        window.location.href = 'tel:+18001234567';
+        window.location.href = 'tel:0800 723 253.';
         break;
       case 'ambulance':
         window.location.href = 'tel:911';
@@ -186,4 +186,5 @@
   });
 </script>
 </body>
+
 </html>
